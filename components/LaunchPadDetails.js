@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React from "react";
+import LottieView from "lottie-react-native";
 
 const LaunchPadDetails = ({ navigation, ...props }) => {
   // using 3 different states for 3 launch names
   const [name1, setName1] = useState([]);
   const [name2, setName2] = useState([]);
   const [name3, setName3] = useState([]);
+  const [image, setImage] = useState("");
 
   const item = props.item;
 
@@ -23,6 +25,7 @@ const LaunchPadDetails = ({ navigation, ...props }) => {
         setName3(res.name);
       });
     }
+    setImage(item.images.large[0]);
   }, []);
 
   // function to get the name of the launch from the provided id
@@ -35,11 +38,23 @@ const LaunchPadDetails = ({ navigation, ...props }) => {
     <View>
       {/* showing the image of launchpad */}
       <View style={styles.imageContainer}>
-        <Image
-          source={{ uri: item.images.large[0] }}
-          style={styles.displayImage}
-          resizeMode="stretch"
-        />
+        {image.length > 0 ? (
+          <Image
+            source={{ uri: image }}
+            style={styles.displayImage}
+            resizeMode="stretch"
+          />
+        ) : (
+          <View>
+            <LottieView
+              source={require("../assets/animations/launchLoading.json")}
+              style={styles.animation}
+              autoPlay
+              loop
+            />
+            <Text style={styles.loading}>Loading</Text>
+          </View>
+        )}
       </View>
       {/* showing name */}
       <View style={styles.subContainer}>

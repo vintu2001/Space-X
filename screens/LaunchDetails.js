@@ -7,6 +7,7 @@ import LottieView from "lottie-react-native";
 const LaunchDetails = ({ navigation, route }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [img, setImage] = useState("");
 
   const id = route.params.id;
 
@@ -17,6 +18,7 @@ const LaunchDetails = ({ navigation, route }) => {
       .then((res) => res.json())
       .then((data) => {
         setData(data);
+        setImage(data.links.patch.large);
         setIsLoading(false);
       });
   };
@@ -38,10 +40,22 @@ const LaunchDetails = ({ navigation, route }) => {
             marginVertical: 40,
           }}
         >
-          <Image
-            source={{ uri: data.links.patch.large }}
-            style={{ height: 250, width: 250 }}
-          />
+          {img.length > 0 ? (
+            <Image
+              source={{ uri: data.links.patch.large }}
+              style={{ height: 250, width: 250 }}
+            />
+          ) : (
+            <View style={{ height: 250 }}>
+              <LottieView
+                source={require("../assets/animations/launchLoading.json")}
+                style={styles.animation}
+                autoPlay
+                loop
+              />
+              <Text style={styles.loading}>Loading</Text>
+            </View>
+          )}
         </View>
         <View style={styles.subContainer}>
           <Text style={styles.subHeading}>Name : </Text>
@@ -105,7 +119,7 @@ const LaunchDetails = ({ navigation, route }) => {
           autoPlay
           loop
         />
-        <Text style={styles.loading}>Loading Your Location</Text>
+        <Text style={styles.loading}>Loading</Text>
       </View>
     );
   }
@@ -140,7 +154,7 @@ const styles = StyleSheet.create({
   },
   button: {
     color: "#fff",
-    fontSize: 30,
+    fontSize: 25,
   },
   loading: {
     textAlign: "center",
@@ -159,8 +173,8 @@ const styles = StyleSheet.create({
   },
   backButton: {
     backgroundColor: "gray",
-    padding: 15,
-    borderRadius: 50,
+    padding: 10,
+    borderRadius: 20,
   },
   green: {
     color: "green",

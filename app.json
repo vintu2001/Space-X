@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.vintu2001.SpaceX"
     },
     "web": {
       "favicon": "./assets/spacexLogo.png"
