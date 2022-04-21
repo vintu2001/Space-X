@@ -3,12 +3,14 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React from "react";
 
 const LaunchPadDetails = ({ navigation, ...props }) => {
+  // using 3 different states for 3 launch names
   const [name1, setName1] = useState([]);
   const [name2, setName2] = useState([]);
   const [name3, setName3] = useState([]);
 
   const item = props.item;
 
+  // getting then name f first 3 launches from the launchpad
   useEffect(async () => {
     if (item.launches.length > 0) {
       getName(item.launches[0]).then((res) => {
@@ -23,6 +25,7 @@ const LaunchPadDetails = ({ navigation, ...props }) => {
     }
   }, []);
 
+  // function to get the name of the launch from the provided id
   let getName = async (id) => {
     const API = `https://api.spacexdata.com/v4/launches/${id}`;
     let res = await fetch(API);
@@ -30,6 +33,7 @@ const LaunchPadDetails = ({ navigation, ...props }) => {
   };
   return (
     <View>
+      {/* showing the image of launchpad */}
       <View style={styles.imageContainer}>
         <Image
           source={{ uri: item.images.large[0] }}
@@ -37,25 +41,29 @@ const LaunchPadDetails = ({ navigation, ...props }) => {
           resizeMode="stretch"
         />
       </View>
+      {/* showing name */}
       <View style={styles.subContainer}>
         <Text style={styles.subHeading}>Name : </Text>
         <Text style={styles.nameText}>{item.full_name}</Text>
       </View>
-
+      {/* showing details of the laumchpad */}
       <View style={styles.subContainer}>
         <Text style={styles.subHeading}>Details : </Text>
         <Text style={styles.details}>{item.details}</Text>
       </View>
+      {/*  showing status of the launchpad */}
       <View style={styles.subContainer}>
         <Text style={styles.subHeading}>Status : </Text>
         <Text style={styles.details}>{item.status}</Text>
       </View>
+      {/* showing the name of the first 3 launches from the launchpad */}
       <View style={styles.subContainer}>
         <Text style={styles.subHeading}>Launches : </Text>
 
         {item.launches.length > 0 ? (
           <View>
             <View>
+              {/*  for 1st launch */}
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("LaunchDetails", {
@@ -65,6 +73,7 @@ const LaunchPadDetails = ({ navigation, ...props }) => {
               >
                 <Text style={styles.launchNos}>{name1}</Text>
               </TouchableOpacity>
+              {/*  for 2nd launch */}
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("LaunchDetails", {
@@ -74,6 +83,7 @@ const LaunchPadDetails = ({ navigation, ...props }) => {
               >
                 <Text style={styles.launchNos}>{name2}</Text>
               </TouchableOpacity>
+              {/* for 3rd launch */}
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("LaunchDetails", {
@@ -86,6 +96,7 @@ const LaunchPadDetails = ({ navigation, ...props }) => {
             </View>
           </View>
         ) : (
+          // if no launches are available then show this
           <Text style={styles.noLaunchText}>No Launch Available</Text>
         )}
       </View>

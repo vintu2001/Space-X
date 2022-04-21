@@ -10,6 +10,7 @@ const Home = ({ navigation }) => {
 
   const API = "https://api.spacexdata.com/v4/launchpads";
 
+  //function for getting details from API
   const fetchAPI = async () => {
     try {
       const response = await fetch(API);
@@ -26,10 +27,12 @@ const Home = ({ navigation }) => {
     fetchAPI();
   }, []);
 
+  //if loading of data is done then return the list of launchpads
   if (!isLoading) {
     return (
       <View style={{ marginTop: 50 }}>
         <View>
+          {/* flatlist for displaying the list of launchpads */}
           <FlatList
             data={data}
             showsVerticalScrollIndicator={false}
@@ -59,6 +62,7 @@ const Home = ({ navigation }) => {
       </View>
     );
   } else {
+    //if loading of data is not done then return the loading animation
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
         <LottieView

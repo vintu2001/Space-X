@@ -9,6 +9,8 @@ const LaunchDetails = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const id = route.params.id;
+
+  // function to get details of the launch from the provided id
   const getDetails = async (id) => {
     const API = `https://api.spacexdata.com/v4/launches/${id}`;
     fetch(API)
@@ -23,6 +25,7 @@ const LaunchDetails = ({ navigation, route }) => {
   }, []);
 
   if (!isLoading) {
+    // if loading data is done then return the details of the launch
     return (
       <View style={styles.container}>
         <View style={{ alignItems: "center" }}>
@@ -93,6 +96,7 @@ const LaunchDetails = ({ navigation, route }) => {
       </View>
     );
   } else {
+    // showing animation till the data is loaded
     return (
       <View style={styles.animationView}>
         <LottieView
@@ -144,9 +148,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   animation: {
-    height: 150,
-    width: 150,
+    height: 120,
+    width: 120,
     alignSelf: "center",
+    margin: 30,
   },
   animationView: {
     flex: 1,
